@@ -21,11 +21,11 @@
         closingSoonMinutes: 30, // Minutes before closing to show "Closes soon"
         openingSoonMinutes: 60, // Minutes before opening to show "Opens soon"
         style: {
-            backgroundColor: "#2c3e50",
-            textColor: "#ffffff",
-            closeButtonColor: "#e74c3c",
+            backgroundColor: "#4A4846",
+            textColor: "#F4F0EF",
+            closeButtonColor: "#F4F0EF",
             fontSize: "14px",
-            fontFamily: "Arial, sans-serif"
+            fontFamily: "Inherit"
         }
     };
 
