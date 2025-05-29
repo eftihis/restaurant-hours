@@ -1,6 +1,8 @@
 (function() {
     'use strict';
     
+    console.log('🍽️ Restaurant Hours Topbar: Script loading...');
+    
     // Configuration - Restaurant owners can modify this
     const RESTAURANT_CONFIG = {
         name: "ThirdEye", // Restaurant name
@@ -27,10 +29,15 @@
         }
     };
 
+    console.log('🍽️ Restaurant Hours Topbar: Configuration loaded', RESTAURANT_CONFIG);
+
     // Check if topbar already exists to prevent duplicate
     if (document.getElementById('restaurant-hours-topbar')) {
+        console.log('🍽️ Restaurant Hours Topbar: Already exists, skipping...');
         return;
     }
+
+    console.log('🍽️ Restaurant Hours Topbar: No existing topbar found, continuing...');
 
     // CSS Styles
     const styles = `
@@ -130,9 +137,11 @@
     `;
 
     // Add styles to page
+    console.log('🍽️ Restaurant Hours Topbar: Adding styles to page...');
     const styleSheet = document.createElement('style');
     styleSheet.textContent = styles;
     document.head.appendChild(styleSheet);
+    console.log('🍽️ Restaurant Hours Topbar: Styles added successfully');
 
     // Utility functions
     function getCurrentTime() {
@@ -175,31 +184,46 @@
             minute: '2-digit'
         });
         
+        console.log('🍽️ Restaurant Hours Topbar: Current day:', currentDay);
+        console.log('🍽️ Restaurant Hours Topbar: Current time:', currentTime);
+        
         const currentMinutes = parseTime(currentTime);
         const todaySchedule = RESTAURANT_CONFIG.schedule[currentDay];
         
+        console.log('🍽️ Restaurant Hours Topbar: Today\'s schedule:', todaySchedule);
+        
         if (!todaySchedule || !todaySchedule.open || !todaySchedule.close) {
-            return { status: 'closed', message: 'Closed today' };
+            const result = { status: 'closed', message: 'Closed today' };
+            console.log('🍽️ Restaurant Hours Topbar: Status result (closed today):', result);
+            return result;
         }
 
         const openMinutes = parseTime(todaySchedule.open);
         const closeMinutes = parseTime(todaySchedule.close);
+        
+        console.log('🍽️ Restaurant Hours Topbar: Current minutes:', currentMinutes);
+        console.log('🍽️ Restaurant Hours Topbar: Open minutes:', openMinutes);
+        console.log('🍽️ Restaurant Hours Topbar: Close minutes:', closeMinutes);
         
         // Check if currently open
         if (currentMinutes >= openMinutes && currentMinutes < closeMinutes) {
             const minutesToClose = closeMinutes - currentMinutes;
             
             if (minutesToClose <= RESTAURANT_CONFIG.closingSoonMinutes) {
-                return {
+                const result = {
                     status: 'closing-soon',
                     message: `Closes soon at ${formatTime(todaySchedule.close)}`
                 };
+                console.log('🍽️ Restaurant Hours Topbar: Status result (closing soon):', result);
+                return result;
             }
             
-            return {
+            const result = {
                 status: 'open',
                 message: `Open until ${formatTime(todaySchedule.close)}`
             };
+            console.log('🍽️ Restaurant Hours Topbar: Status result (open):', result);
+            return result;
         }
         
         // Check if opening soon today
@@ -207,16 +231,20 @@
             const minutesToOpen = openMinutes - currentMinutes;
             
             if (minutesToOpen <= RESTAURANT_CONFIG.openingSoonMinutes) {
-                return {
+                const result = {
                     status: 'opening-soon',
                     message: `Opens soon at ${formatTime(todaySchedule.open)}`
                 };
+                console.log('🍽️ Restaurant Hours Topbar: Status result (opening soon):', result);
+                return result;
             }
             
-            return {
+            const result = {
                 status: 'closed',
                 message: `Opens today at ${formatTime(todaySchedule.open)}`
             };
+            console.log('🍽️ Restaurant Hours Topbar: Status result (closed, opens today):', result);
+            return result;
         }
         
         // Closed for today, check tomorrow
@@ -229,17 +257,23 @@
         
         const tomorrowSchedule = RESTAURANT_CONFIG.schedule[tomorrowDay];
         if (tomorrowSchedule && tomorrowSchedule.open) {
-            return {
+            const result = {
                 status: 'closed',
                 message: `Opens tomorrow at ${formatTime(tomorrowSchedule.open)}`
             };
+            console.log('🍽️ Restaurant Hours Topbar: Status result (closed, opens tomorrow):', result);
+            return result;
         }
         
-        return { status: 'closed', message: 'Closed' };
+        const result = { status: 'closed', message: 'Closed' };
+        console.log('🍽️ Restaurant Hours Topbar: Status result (closed):', result);
+        return result;
     }
 
     // Create topbar HTML
     function createTopbar() {
+        console.log('🍽️ Restaurant Hours Topbar: Creating topbar elements...');
+        
         const topbar = document.createElement('div');
         topbar.id = 'restaurant-hours-topbar';
         
@@ -264,16 +298,19 @@
         
         // Close button functionality
         closeButton.addEventListener('click', function() {
+            console.log('🍽️ Restaurant Hours Topbar: Close button clicked');
             topbar.classList.add('hidden');
             // Remember that user dismissed it for this session
             sessionStorage.setItem('restaurant-hours-dismissed', 'true');
         });
         
+        console.log('🍽️ Restaurant Hours Topbar: Topbar elements created successfully');
         return { topbar, statusElement, infoElement };
     }
 
     // Update topbar content
     function updateTopbar(statusElement, infoElement) {
+        console.log('🍽️ Restaurant Hours Topbar: Updating topbar content...');
         const status = getRestaurantStatus();
         
         // Update status badge
@@ -282,43 +319,59 @@
         
         // Update info text
         infoElement.textContent = status.message;
+        
+        console.log('🍽️ Restaurant Hours Topbar: Topbar updated with status:', status);
     }
 
     // Initialize the topbar
     function init() {
+        console.log('🍽️ Restaurant Hours Topbar: Initializing...');
+        
         // Check if user already dismissed it this session
         if (sessionStorage.getItem('restaurant-hours-dismissed') === 'true') {
+            console.log('🍽️ Restaurant Hours Topbar: User previously dismissed, skipping...');
             return;
         }
 
         // Wait for DOM to be ready
         if (document.readyState === 'loading') {
+            console.log('🍽️ Restaurant Hours Topbar: DOM still loading, waiting...');
             document.addEventListener('DOMContentLoaded', init);
             return;
         }
 
+        console.log('🍽️ Restaurant Hours Topbar: DOM ready, creating topbar...');
+        
         const { topbar, statusElement, infoElement } = createTopbar();
         
         // Insert at the beginning of body
+        console.log('🍽️ Restaurant Hours Topbar: Inserting topbar into DOM...');
         document.body.insertBefore(topbar, document.body.firstChild);
         
         // Adjust body padding to account for fixed topbar
         const originalPaddingTop = document.body.style.paddingTop;
-        document.body.style.paddingTop = (parseInt(originalPaddingTop) || 0) + 44 + 'px';
+        const newPaddingTop = (parseInt(originalPaddingTop) || 0) + 44 + 'px';
+        document.body.style.paddingTop = newPaddingTop;
+        console.log('🍽️ Restaurant Hours Topbar: Adjusted body padding from', originalPaddingTop, 'to', newPaddingTop);
         
         // Initial update
         updateTopbar(statusElement, infoElement);
         
         // Update every minute
         setInterval(() => {
+            console.log('🍽️ Restaurant Hours Topbar: Scheduled update triggered');
             updateTopbar(statusElement, infoElement);
         }, 60000);
+        
+        console.log('🍽️ Restaurant Hours Topbar: Successfully initialized! 🎉');
     }
 
     // Start the script
+    console.log('🍽️ Restaurant Hours Topbar: Starting initialization...');
     init();
 
     // Expose configuration for external modification if needed
     window.RestaurantHoursConfig = RESTAURANT_CONFIG;
+    console.log('🍽️ Restaurant Hours Topbar: Configuration exposed to window.RestaurantHoursConfig');
     
 })(); 
