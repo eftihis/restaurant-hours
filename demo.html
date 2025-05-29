@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Hours Topbar Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .demo-section {
+            background: #f4f4f4;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .config-section {
+            background: #e8f4fd;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+        
+        code {
+            background: #333;
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        pre {
+            background: #333;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+        
+        .status-examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .status-example {
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .example-open { background-color: #27ae60; }
+        .example-closed { background-color: #e74c3c; }
+        .example-closing-soon { background-color: #f39c12; }
+        .example-opening-soon { background-color: #3498db; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍽️ Restaurant Hours Topbar Demo</h1>
+        
+        <p>This page demonstrates the restaurant hours topbar script. The topbar should appear at the top of this page showing the current status of your restaurant.</p>
+        
+        <div class="demo-section">
+            <h2>Features</h2>
+            <ul>
+                <li>✅ Shows live restaurant status (Open/Closed/Closes Soon/Opens Soon)</li>
+                <li>✅ Automatically updates every minute</li>
+                <li>✅ Timezone-aware calculations</li>
+                <li>✅ Dismissible with session memory</li>
+                <li>✅ Mobile responsive</li>
+                <li>✅ Easy to customize</li>
+                <li>✅ Works on any website as a CDN script</li>
+            </ul>
+        </div>
+        
+        <div class="status-examples">
+            <div class="status-example example-open">OPEN<br><small>Open until 10:00 PM</small></div>
+            <div class="status-example example-closed">CLOSED<br><small>Opens tomorrow at 11:00 AM</small></div>
+            <div class="status-example example-closing-soon">CLOSES SOON<br><small>Closes soon at 10:00 PM</small></div>
+            <div class="status-example example-opening-soon">OPENS SOON<br><small>Opens soon at 11:00 AM</small></div>
+        </div>
+        
+        <div class="config-section">
+            <h2>🔧 How to Use</h2>
+            <p>To add this topbar to your restaurant website, simply include this script tag in your HTML:</p>
+            <pre><code>&lt;script src="path/to/restaurant-hours-topbar.js"&gt;&lt;/script&gt;</code></pre>
+            
+            <h3>Customization</h3>
+            <p>Edit the <code>RESTAURANT_CONFIG</code> object at the top of the script to customize:</p>
+            <ul>
+                <li><strong>Restaurant name</strong> (currently not displayed but available for future use)</li>
+                <li><strong>Timezone</strong> - Set your restaurant's timezone</li>
+                <li><strong>Opening hours</strong> - Set different hours for each day</li>
+                <li><strong>Timing thresholds</strong> - When to show "closes soon" vs "opens soon"</li>
+                <li><strong>Styling</strong> - Colors, fonts, and sizes</li>
+            </ul>
+        </div>
+        
+        <div class="demo-section">
+            <h2>Current Configuration</h2>
+            <p>The demo is currently set up with these hours:</p>
+            <ul>
+                <li><strong>Monday-Thursday:</strong> 11:00 AM - 10:00 PM</li>
+                <li><strong>Friday:</strong> 11:00 AM - 11:00 PM</li>
+                <li><strong>Saturday:</strong> 10:00 AM - 11:00 PM</li>
+                <li><strong>Sunday:</strong> 10:00 AM - 9:00 PM</li>
+            </ul>
+            <p><strong>Timezone:</strong> America/New_York</p>
+            <p><strong>Closes Soon Warning:</strong> 30 minutes before closing</p>
+            <p><strong>Opens Soon Alert:</strong> 60 minutes before opening</p>
+        </div>
+        
+        <div class="demo-section">
+            <h2>Try it out!</h2>
+            <p>Look at the top of this page to see the topbar in action. Try dismissing it by clicking the × button. The topbar will remember that you dismissed it for this browsing session.</p>
+            <p>Refresh the page to see it again, or open this page in an incognito window.</p>
+        </div>
+        
+        <div class="config-section">
+            <h2>Technical Notes</h2>
+            <ul>
+                <li>The script is wrapped in an IIFE to avoid global scope pollution</li>
+                <li>It checks for existing topbars to prevent duplicates</li>
+                <li>Uses sessionStorage to remember dismissal</li>
+                <li>Automatically adjusts body padding to prevent content overlap</li>
+                <li>High z-index (999999) ensures it stays on top</li>
+                <li>Responsive design that hides detailed info on mobile</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- Load the restaurant hours topbar script -->
+    <script src="restaurant-hours-topbar.js"></script>
+    
+    <script>
+        // Demo script to show current configuration
+        setTimeout(() => {
+            if (window.RestaurantHoursConfig) {
+                console.log('Restaurant Hours Configuration:', window.RestaurantHoursConfig);
+            }
+        }, 1000);
+    </script>
+</body>
+</html> 
