@@ -212,7 +212,7 @@
             if (minutesToClose <= RESTAURANT_CONFIG.closingSoonMinutes) {
                 const result = {
                     status: 'closing-soon',
-                    message: `Closes soon at ${formatTime(todaySchedule.close)}`
+                    message: `Kitchen Closes soon at ${formatTime(todaySchedule.close)}`
                 };
                 console.log('🍽️ Restaurant Hours Topbar: Status result (closing soon):', result);
                 return result;
@@ -220,7 +220,7 @@
             
             const result = {
                 status: 'open',
-                message: `Open until ${formatTime(todaySchedule.close)}`
+                message: `Kitchen Open until ${formatTime(todaySchedule.close)}`
             };
             console.log('🍽️ Restaurant Hours Topbar: Status result (open):', result);
             return result;
