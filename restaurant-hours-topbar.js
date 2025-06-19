@@ -10,13 +10,13 @@
         timezone: "Europe/Athens", // Timezone for Athens, Greece
         schedule: {
             // Format: "HH:MM" in 24-hour format, null means closed
-            monday: { open: "16:00", close: "22:00" },
+            monday: { open: "17:00", close: "23:00" },
             tuesday: null,
-            wednesday: { open: "16:00", close: "22:00" },
-            thursday: { open: "16:00", close: "22:00" },
-            friday: { open: "16:00", close: "22:00" },
-            saturday: { open: "16:00", close: "22:00" },
-            sunday: { open: "16:00", close: "22:00" }
+            wednesday: { open: "17:00", close: "23:00" },
+            thursday: { open: "17:00", close: "23:00" },
+            friday: { open: "17:00", close: "23:00" },
+            saturday: { open: "17:00", close: "23:00" },
+            sunday: { open: "17:00", close: "23:00" }
         },
         closingSoonMinutes: 30, // Minutes before closing to show "Closes soon"
         openingSoonMinutes: 60, // Minutes before opening to show "Opens soon"
